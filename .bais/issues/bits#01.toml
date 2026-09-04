@@ -1,0 +1,25 @@
+id = "bits#01"
+title = "BITS tracking epic: bootstrap + dogfood the agent-acceptance suite"
+status = "Open"
+kind = "Feat"
+area = "bits/epic"
+body = """
+Bootstrap BITS (Basically a made-up Integrated Test Suite): fixtures
+are BAIS issues (test-backlog/*.toml), runners are agents driving the
+real `bi` CLI, verdicts are BAML types. A BITS failure files itself
+as a BAIS issue with the transcript attached.
+Entry criteria (do not bootstrap on an untrusted substrate — else we
+debug the suite AND the substrate at once): bi#38 self-verifying log
+-> bi#41 P0 fixed -> bi#42 clocks reconciled -> sync-test green on
+loopback. That is the critical path; this epic starts when it lands.
+First work once unblocked (parallelizable, new files only — ideal
+agent batch): fixture backlog + stub harness, then Verdict shapes
+(bi#53), then the self-filing loop. Tiers: T0+T1 gate commits
+(seconds); T2 stub-model is the default suite; T3 live runs are
+seeded samples, nightly only, never per-commit. Per-case token caps
+and wall-clock timeouts are assertions.
+Acceptance: T2 green on the full fixture backlog; one T3 sampled run
+observed end-to-end; a deliberately broken fixture files a correct
+BAIS issue with transcript; suite cost tracked per run (tokens +
+wall-clock) with no week-over-week regression unexplained.
+"""

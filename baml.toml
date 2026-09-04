@@ -1,0 +1,7 @@
+[package]
+name = "bits"
+
+[generator.client1]
+output_type = "typescript/node"
+naming_convention = "preserve-case"
+output_dir = "."

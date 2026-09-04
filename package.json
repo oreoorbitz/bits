@@ -1,0 +1,21 @@
+{
+	"name": "bits",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"description": "BITS — Basically a made-up Integrated Test Suite. Agent-driven acceptance for the bi CLI and BAIS: fixtures are BAIS issues, runners are agents, verdicts are BAML types.",
+	"bin": {
+		"bits": "./dist/src/cli.js"
+	},
+	"scripts": {
+		"build": "tsc -p tsconfig.json",
+		"typecheck": "tsc -p tsconfig.json --noEmit"
+	},
+	"dependencies": {
+		"@boundaryml/baml-bridge": "0.17.0"
+	},
+	"devDependencies": {
+		"@types/node": "22.19.19",
+		"typescript": "5.9.3"
+	}
+}

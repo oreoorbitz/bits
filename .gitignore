@@ -1,0 +1,8 @@
+node_modules/
+dist/
+*.tsbuildinfo
+baml_sdk/
+.baml/
+# BITS run state — rebuildable, never commit
+.bits/runs/
+.bits/store.db
