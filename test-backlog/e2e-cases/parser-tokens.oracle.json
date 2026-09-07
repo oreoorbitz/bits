@@ -1,0 +1,5 @@
+{
+  "case_id": "spec-1",
+  "facet": "parser tokens",
+  "spec": "KEY, STRING per bais/toml/toml.abnf"
+}

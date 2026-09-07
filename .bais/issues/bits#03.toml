@@ -1,0 +1,18 @@
+id = "bits#03"
+title = "BITS T2 fast path: stub-model acceptance over the fixture backlog"
+status = "Done"
+kind = "Feat"
+area = "bits/t2"
+body = """
+First BITS suite that runs: scripts/bits-t2.mjs materializes each
+test-backlog/ family into a tmp hub and drives the real `bi` CLI
+(stub model, machine speed, no localhost, no key). Six stable arms:
+chain-blocks, cycle-parks, dangling-parks, fanout-hub-first,
+lease-fencing, budgets-asserted (self-metered). A failed arm files
+itself as a bits issue with transcript (see bits#02, kept as proof).
+
+Acceptance: 6/6 green + exit 0 via `bits run --fast`; close with
+Evidence: drill(bits-t2).
+
+Evidence: drill(bits-t2) # 6/6 green, exit 0, total ~4.2s / 120s cap, observed 2026-09-06
+"""

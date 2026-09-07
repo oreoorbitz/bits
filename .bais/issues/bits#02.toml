@@ -1,0 +1,42 @@
+id = "bits#02"
+title = "BITS self-file: chain-blocks ready-nonexact"
+status = "Open"
+kind = "Bug"
+area = "bits/t2"
+body = """
+BITS self-file: arm chain-blocks graded Fail (ready-nonexact).
+
+Suite: drill(bits-t2). Filed by the suite, not by hand — the suite
+uses the tool to prove the tool.
+
+Transcript:
+{
+  "ready": [
+    {
+      "issue": {
+        "id": "t#01",
+        "title": "unblock me first",
+        "status": "Open",
+        "kind": "Feat",
+        "area": null,
+        "severity": null,
+        "source": null,
+        "body": "Head of the chain. Closing t#01 must surface t#02 in ready.\n"
+      },
+      "edges": [],
+      "holder": null,
+      "lease": null
+    }
+  ],
+  "unparseable": []
+}
+
+ready=["t#01"]
+
+Drill provenance (hub#153, 2026-09-06): this filing is the acceptance
+proof, not a substrate bug. The chain-blocks expectation in bits-t2.mjs
+was deliberately sabotaged (expected [t#02] pre-move); the suite failed
+FOR THAT REASON, filed this issue with the transcript above, then the
+hunk was restored and the suite re-ran 6/6 green. Kept Open as the
+self-filing loop's existence proof.
+"""

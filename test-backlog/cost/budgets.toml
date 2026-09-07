@@ -1,0 +1,30 @@
+# BITS budget table — single source the T2 runner reads.
+# Per-arm wall-clock timeouts (ms) are assertions, not suggestions: the
+# runner grades an arm Fail when its measured wall_ms crosses its cap,
+# mirroring grade_verdict() in baml_src/main.baml (T0 twin: the literal
+# caps in main_test.baml mirror these numbers — change both together).
+# Stub arms burn zero tokens (token_cap = 0 in BAML); caps are recorded
+# for T3 parity. Suite cap bounds the whole run incl. self-filing.
+
+suite_cap_ms = 120000
+
+[arm.chain-blocks]
+timeout_ms = 30000
+
+[arm.cycle-parks]
+timeout_ms = 30000
+
+[arm.dangling-parks]
+timeout_ms = 30000
+
+[arm.fanout-hub-first]
+timeout_ms = 30000
+
+[arm.lease-fencing]
+timeout_ms = 30000
+
+[arm.cross-embedder-agreement]
+timeout_ms = 30000
+
+[arm.budgets-asserted]
+timeout_ms = 30000

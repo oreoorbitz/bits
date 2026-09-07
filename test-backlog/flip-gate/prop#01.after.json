@@ -1,0 +1,4 @@
+[
+  { "case_id": "cycle-parks", "outcome": "Pass", "reason": "ready-empty", "over_budget": false },
+  { "case_id": "dangling-parks", "outcome": "Pass", "reason": "ready-empty", "over_budget": false }
+]

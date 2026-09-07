@@ -1,0 +1,8 @@
+id = "t#20"
+title = "fanout hub"
+status = "Open"
+kind = "Feat"
+body = """
+Blocks three leaves. Under --order blast-radius the hub sorts first: urgency orders the hub, severity untouched.
+"""
+severity = 3

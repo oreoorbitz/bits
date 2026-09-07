@@ -1,0 +1,11 @@
+{
+  "id": "red-scaffold-grades-fail",
+  "title": "unimplemented scaffold grades Fail scaffold-unimplemented, never a crash",
+  "tier": "T2",
+  "token_cap": 0,
+  "timeout_ms": 30000,
+  "surface": "bits shape-parity red probe",
+  "exercise": "run: node .bais/e2e/bits-shape-red.mjs",
+  "scaffold": ".bais/e2e/bits-shape-red.mjs",
+  "expect": "fail:scaffold-unimplemented"
+}

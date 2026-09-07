@@ -1,0 +1,8 @@
+id = "t#24"
+title = "independent bystander"
+status = "Open"
+kind = "Feat"
+body = """
+No edges. Ready under blast-radius order: hub t#20 first, then this.
+"""
+severity = 4

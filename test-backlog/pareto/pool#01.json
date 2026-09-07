@@ -1,0 +1,14 @@
+[
+  [
+    { "grader": "entity-preservation", "score": 0.0, "pass_threshold": 0.75, "reason": "refused" },
+    { "grader": "length-band", "score": 0.0, "pass_threshold": 0.9, "reason": "refused" },
+    { "grader": "chemical-name", "score": 1.0, "pass_threshold": 0.9, "reason": "verbatim-copy" },
+    { "grader": "llm-judge", "score": 0.0, "pass_threshold": 0.5, "reason": "judge-fail" }
+  ],
+  [
+    { "grader": "entity-preservation", "score": 0.9, "pass_threshold": 0.75, "reason": "entities-preserved" },
+    { "grader": "length-band", "score": 0.95, "pass_threshold": 0.9, "reason": "in-band" },
+    { "grader": "chemical-name", "score": 0.8, "pass_threshold": 0.9, "reason": "minor-drift" },
+    { "grader": "llm-judge", "score": 0.75, "pass_threshold": 0.5, "reason": "judge-good" }
+  ]
+]

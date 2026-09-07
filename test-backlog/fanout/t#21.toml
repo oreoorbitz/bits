@@ -1,0 +1,13 @@
+id = "t#21"
+title = "fanout leaf one"
+status = "Open"
+kind = "Feat"
+body = """
+Parked behind t#20.
+"""
+severity = 1
+
+[[edge]]
+from = "t#20"
+to = "t#21"
+kind = "Blocks"

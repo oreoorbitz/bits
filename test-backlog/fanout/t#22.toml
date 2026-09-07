@@ -1,0 +1,13 @@
+id = "t#22"
+title = "fanout leaf two"
+status = "Open"
+kind = "Feat"
+body = """
+Parked behind t#20. Higher severity than the hub — ordering must still put the hub first.
+"""
+severity = 5
+
+[[edge]]
+from = "t#20"
+to = "t#22"
+kind = "Blocks"

@@ -22,4 +22,15 @@ Acceptance: T2 green on the full fixture backlog; one T3 sampled run
 observed end-to-end; a deliberately broken fixture files a correct
 BAIS issue with transcript; suite cost tracked per run (tokens +
 wall-clock) with no week-over-week regression unexplained.
+
+Progress 2026-09-06 (hub#153, holder bits-153):
+- BAML Case/Verdict + grading in baml_src/main.baml; baml check 2 files,
+  baml test 13/13 green (T0). Red-check: neutered cap hunk failed the
+  over-cap test for the right reason, restored green.
+- T2 bits-t2.mjs: 6/6 arms green, exit 0, ~4.2s / 120s cap, stub tokens 0.
+  Self-file loop proven: sabotage drill filed bits#02 (kept Open as proof).
+- Close-evidence: bits#03 Done citing Evidence: drill(bits-t2); bais check
+  clean on bits hub; negative control drill(bits-nope) -> unresolvable-drill.
+- OPEN: T3 sampled live run (needs model key) + week-over-week cost
+  tracking (needs a second run). Epic stays Open pending operator call.
 """

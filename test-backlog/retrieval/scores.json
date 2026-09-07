@@ -1,0 +1,47 @@
+{
+  "_note": "hub#173 retrieval-eval fixture: fixed query set x recorded vendor scores. Query 1 is live php-v1 data (2026-09-06; hub#170 voyage-4-large@1024 + rerank-2, hub#172 embed-english-v3.0@1024 + rerank-english-v3.0). Queries 2-3 are plausible fixtures authored for the eval arm, NOT live-measured: replace with live runs when available. Rank-1 agreement is ASSERTED by the T2 arm; per-vendor spreads are RECORDED in the arm transcript, never asserted (observation first, thresholds later).",
+  "queries": [
+    {
+      "query": "prepared statements",
+      "source": "live php-v1 2026-09-06 (hub#170, hub#172)",
+      "voyage": [
+        { "doc_id": "pdo-prepared#0", "score": 0.707 },
+        { "doc_id": "rank2-unrecorded", "score": 0.617, "_note": "score verbatim from hub#170 body; doc id not captured in the issue, placeholder declared" },
+        { "doc_id": "rank3-unrecorded", "score": 0.559, "_note": "score verbatim from hub#170 body; doc id not captured in the issue, placeholder declared" }
+      ],
+      "cohere": [
+        { "doc_id": "pdo-prepared#0", "score": 0.9961 },
+        { "doc_id": "rank2-unrecorded", "score": 0.0562, "_note": "score verbatim from hub#172 body; doc id not captured in the issue, placeholder declared" },
+        { "doc_id": "rank3-unrecorded", "score": 0.0037, "_note": "score verbatim from hub#172 body; doc id not captured in the issue, placeholder declared" }
+      ]
+    },
+    {
+      "query": "connection pooling",
+      "source": "plausible fixture authored 2026-09-06, NOT live-measured",
+      "voyage": [
+        { "doc_id": "pool-config#2", "score": 0.681 },
+        { "doc_id": "pool-size#0", "score": 0.602 },
+        { "doc_id": "pool-timeout#1", "score": 0.541 }
+      ],
+      "cohere": [
+        { "doc_id": "pool-config#2", "score": 0.9821 },
+        { "doc_id": "pool-size#0", "score": 0.0712 },
+        { "doc_id": "pool-timeout#1", "score": 0.0098 }
+      ]
+    },
+    {
+      "query": "migration rollback",
+      "source": "plausible fixture authored 2026-09-06, NOT live-measured",
+      "voyage": [
+        { "doc_id": "migrate-down#1", "score": 0.654 },
+        { "doc_id": "migrate-up#1", "score": 0.598 },
+        { "doc_id": "migrate-seed#0", "score": 0.512 }
+      ],
+      "cohere": [
+        { "doc_id": "migrate-down#1", "score": 0.9744 },
+        { "doc_id": "migrate-up#1", "score": 0.0633 },
+        { "doc_id": "migrate-seed#0", "score": 0.0115 }
+      ]
+    }
+  ]
+}

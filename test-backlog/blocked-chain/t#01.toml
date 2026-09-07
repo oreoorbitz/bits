@@ -1,0 +1,7 @@
+id = "t#01"
+title = "unblock me first"
+status = "Open"
+kind = "Feat"
+body = """
+Head of the chain. Closing t#01 must surface t#02 in ready.
+"""

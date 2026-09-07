@@ -1,0 +1,12 @@
+id = "t#10"
+title = "cycle left"
+status = "Open"
+kind = "Feat"
+body = """
+Blocks loop with t#11. Ready must stay empty-with-reasons; check must report the cycle.
+"""
+
+[[edge]]
+from = "t#11"
+to = "t#10"
+kind = "Blocks"

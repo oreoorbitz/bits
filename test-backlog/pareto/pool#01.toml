@@ -1,0 +1,21 @@
+id = "pool#01"
+title = "candidate pool: degenerate refuse-to-summarize vs balanced"
+status = "Open"
+kind = "Feat"
+area = "bits/policy"
+body = """
+Candidate pool fixture (hub#202 consumer): the cookbook's degenerate
+matrix. Row 0 is the "refuse-to-summarize" candidate — it maxes the
+chemical-name grader (1.0, verbatim-copy) and fails everything else,
+the overfit the self-evolving-agents cookbook's static metaprompt fell
+into. Row 1 is the balanced candidate (passes 3/4 graders).
+
+The Pareto front must keep BOTH rows (neither dominates the other —
+the degenerate row stays, but never alone), and promotion_pool() must
+return only row 1: lenient_pass (hub#201) blocks the degenerate row
+(1/4 pass fraction, 0.25 average — under both the 0.75 and 0.85 bars).
+
+The T0 literals in baml_src/pareto_test.baml ("fixture pool#01
+degenerate matrix") mirror pool#01.json verbatim — change both
+together; that mirror is the tracer.
+"""

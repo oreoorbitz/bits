@@ -1,0 +1,12 @@
+id = "t#30"
+title = "blocked by a typo"
+status = "Open"
+kind = "Feat"
+body = """
+t#NOPE does not exist. Conservative park: ready must stay empty and check must report the dangling ref — never silently satisfied.
+"""
+
+[[edge]]
+from = "t#NOPE"
+to = "t#30"
+kind = "Blocks"

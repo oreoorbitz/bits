@@ -1,0 +1,12 @@
+id = "prop#01"
+title = "prompt patch: cycles + dangling ready-empty wording"
+status = "Open"
+kind = "Feat"
+area = "bits/policy"
+body = """
+Self-modification proposal (hub#200 consumer): a prompt patch claiming to
+fix the cycle-parks and dangling-parks drill arms. It may land only if
+flip_gate(prop#01.before.json, prop#01.after.json) returns FlipAccept —
+the recorded arms flip fail->pass with zero pass->fail regressions.
+Gate: node bits/scripts/flip-gate.mjs prop#01
+"""

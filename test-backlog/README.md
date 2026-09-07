@@ -13,4 +13,26 @@ Planned fixture families (land with the first real work, bits#01):
 - `leases/` — claims, expiry, fencing mismatches, dead holders (bi#42/43).
 - `cost/` — burn crosses cap; computed urgency rises, severity untouched (bi#52).
 
-No fixtures yet — this directory exists so the shape is settled before content arrives.
+Content landed with hub#153 (bits#03). Each family dir holds the live CLI
+fixtures the T2 arm of the same name materializes into a tmp hub:
+
+| Family (`test-backlog/`) | Arm | What the arm asserts via the real `bi` CLI |
+|---|---|---|
+| `blocked-chain/` (t#01→t#02) | `chain-blocks` | ready=[t#01]; after `move t#01 Done`, ready=[t#02] |
+| `cycles/` (t#10↔t#11) | `cycle-parks` | ready empty; `check` reports both in cycles (check exits nonzero with JSON — parse it anyway) |
+| `dangling/` (t#30→t#NOPE) | `dangling-parks` | ready empty (conservative park); `check` reports t#NOPE dangling |
+| `fanout/` (hub t#20 + leaves + t#24) | `fanout-hub-first` | `--order blast-radius` puts t#20 first; severity untouched (leaf t#22 has severity 5) |
+| `leases/` (t#40) | `lease-fencing` | claim fences from ready; `reap --now` past expiry re-parks to Open |
+| `cost/budgets.toml` | `budgets-asserted` | every arm wall_ms within its cap; suite total within suite_cap_ms (self-metered; stub tokens 0) |
+| `retrieval/scores.json` (hub#173) | `cross-embedder-agreement` | rank-1 agreement across vendors per query (flip fails naming the query); per-vendor spreads recorded, never asserted |
+
+Recipe note (divergence from "every fixture is a BAIS issue"): `cost/`
+holds no issues — budgets.toml is the runner's budget table, and the T0
+literals in baml_src/main_test.baml mirror its numbers (change both
+together). The BAML grading twin (over-cap Pass grades Fail) is the
+policy; the runner is the enforcement. Same divergence for
+`retrieval/`: scores.json holds recorded vendor scores (not issues —
+vendors score chunks, BAIS tracks work), and the T0 literals in
+baml_src/retrieval_test.baml mirror its query 1 + 2 (change both
+together). The BAML policy twin is check_agreement/calibration_spread
+in baml_src/retrieval.baml.

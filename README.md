@@ -19,7 +19,7 @@ Sibling to `bi`, `bais`, `bagl` under `orion-learn-baml/` — agent-driven accep
 | T2 | BITS fast path — stub model, machine speed | seconds | default suite |
 | T3 | BITS live path — real model, seeded sample | minutes + tokens | nightly, on-demand |
 
-**Status:** scaffold (bits#01 is the tracking epic). Entry criteria before bootstrapping: bi#38 self-verifying log → bi#41 P0 fixed → bi#42 clocks reconciled → sync-test green on loopback.
+**Status:** first real work landed (hub#153, bits#03 Done). T0: `Case`/`Verdict` + grading in `baml_src/main.baml`, `baml test` 13/13. T2: `scripts/bits-t2.mjs` 6/6 green via `bits run --fast`; failures self-file as bits issues (bits#02 kept as proof); `Evidence: drill(bits-t2)` resolves hub-wide. bits#01 stays Open pending the T3 sampled live run (needs a model key).
 
 ```bash
 cd bits

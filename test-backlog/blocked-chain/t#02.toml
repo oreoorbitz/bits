@@ -1,0 +1,12 @@
+id = "t#02"
+title = "parked behind t#01"
+status = "Open"
+kind = "Feat"
+body = """
+Parked until t#01 closes. Must never appear in ready before that.
+"""
+
+[[edge]]
+from = "t#01"
+to = "t#02"
+kind = "Blocks"
