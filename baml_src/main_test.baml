@@ -176,11 +176,21 @@ testset "interop shapes" {
         assert.equal(evidence_cite("bits-t2"), "Evidence: drill(bits-t2)");
     }
 
-    test "self_file_body carries arm, reason, transcript" {
-        let b = self_file_body("chain-blocks", "ready-nonempty", "ready=[t#02]");
+    test "self_file_title names arm and reason" {
+        assert.equal(
+            self_file_title("chain-blocks", "ready-nonexact"),
+            "BITS self-file: chain-blocks ready-nonexact",
+        );
+    }
+
+    test "self_file_body carries arm, reason, provenance, transcript" {
+        // The exact byte shape scripts/bits-t2.mjs selfFileBody() writes —
+        // drift on either side fails here. The transcript literal names
+        // both sides of the comparison (bits#02: actual + expected).
+        let b = self_file_body("chain-blocks", "ready-nonexact", "ready=[t#01] expected=[t#02]");
         assert.equal(
             b,
-            "BITS failure: arm chain-blocks graded Fail (ready-nonempty)\n\nTranscript:\nready=[t#02]",
+            "BITS self-file: arm chain-blocks graded Fail (ready-nonexact).\n\nSuite: drill(bits-t2). Filed by the suite, not by hand — the suite\nuses the tool to prove the tool.\n\nTranscript:\nready=[t#01] expected=[t#02]",
         );
     }
 }

@@ -1,6 +1,6 @@
 id = "bits#02"
 title = "BITS self-file: chain-blocks ready-nonexact"
-status = "Open"
+status = "Done"
 kind = "Bug"
 area = "bits/t2"
 body = """
@@ -39,4 +39,21 @@ was deliberately sabotaged (expected [t#02] pre-move); the suite failed
 FOR THAT REASON, filed this issue with the transcript above, then the
 hunk was restored and the suite re-ran 6/6 green. Kept Open as the
 self-filing loop's existence proof.
+
+Diagnosis (kimi-bits-selffile, 2026-09-07): the mismatch was in the
+derivation, not the ready set. The transcript above records only the
+ACTUAL side of the comparison (ready=["t#01"], correct-looking) while
+the EXPECTED side lived only in the runner source — a ready-nonexact
+filing that could not explain itself. The post-move check also derived
+ready-nonempty for an exact comparison (the opposite of what an
+un-surfaced tail means), and self_file_body() in main.baml had drifted
+from the body the host actually wrote (plus a stale header comment
+claiming ready-nonempty/bits#03 for this drill). Fix: both chain-blocks
+comparisons derive ready-nonexact with ready=<actual>
+expected=<expected> in the note; self_file_title()/self_file_body() are
+the typed shape scripts/bits-t2.mjs mirrors byte-for-byte, pinned by a
+T0 literal; header comment corrected. Red-checked per bi#57 on the
+fixed comparison (record in bits-t2.mjs header).
+
+Evidence: drill(bits-t2)
 """

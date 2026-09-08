@@ -23,8 +23,8 @@
 // Self-filing: a failed arm files itself as bits/.bais/issues/bits#NN.toml
 // (kind Bug, area bits/t2) with the transcript attached — the suite uses
 // the tool to prove the tool. Deliberately-broken-fixture drill observed
-// 2026-09-06: sabotaged chain-blocks expectation -> FAIL ready-nonempty,
-// filed bits#03 with transcript, restored green (hub#153 acceptance).
+// 2026-09-06: sabotaged chain-blocks expectation -> FAIL ready-nonexact,
+// filed bits#02 with transcript, restored green (hub#153 acceptance).
 //
 // Red-check (bi#57), observed 2026-09-06:
 //   hunk: chain-blocks pre-move expectation flipped to ["t#02"].
@@ -48,6 +48,24 @@
 //   drive-by: single-arm FAIL lines now append the transcript (was
 //     reason-only, query invisible on the console) — every arm's
 //     single-arm failure got louder, exit codes unchanged.
+//
+// Red-check (bi#57) for the bits#02 chain-blocks derivation fix,
+// observed 2026-09-07:
+//   hunk: pre-move expectation flipped ["t#01"] -> ["t#02"] (comparison
+//     and expected= note — the same sabotage that self-filed bits#02).
+//   run A (single-arm): FAIL chain-blocks ready-nonexact exit=1 ::
+//     transcript now ends `ready=["t#01"] expected=["t#02"]` — BOTH
+//     sides of the comparison named (pre-fix the filing showed only the
+//     correct-looking actual side, undebuggable from the issue alone).
+//   run B (BIT_SELF_FILE_DIR=/tmp/bits02-redcheck, full suite): same
+//     FAIL ready-nonexact, 8/9, exit=1, filed bits#02.toml in the
+//     override dir; its body is byte-identical to the self_file_body()
+//     shape pinned in main_test.baml and carries the both-sides note.
+//   Hunk restored, re-ran 9/9 green exit=0, no filing in the real
+//   issues dir. The post-move check now also derives ready-nonexact
+//   (was ready-nonempty — the opposite of what an un-surfaced tail
+//   means); cycle-parks/dangling-parks keep ready-nonempty, their
+//   checks are genuine length!==0.
 
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -120,16 +138,26 @@ const ARMS = [
 		family: "blocked-chain",
 		title: "closing the head surfaces the tail",
 		run(hub, cap) {
+			// bits#02: an exact-comparison failure note must name BOTH
+			// sides — actual and expected. A self-filed issue whose
+			// transcript shows only the actual side is undebuggable (the
+			// bits#02 filing showed correct-looking ready=["t#01"] while
+			// the sabotaged expectation lived only in this source). Both
+			// checks here are exact, so both derive ready-nonexact — the
+			// post-move check previously derived ready-nonempty, the
+			// opposite of what an un-surfaced tail means.
 			let r = sh(BI, ["bais", "ready", "--json"], hub, cap);
 			if (!r.ok) return fail("exit-nonzero", r);
 			const before = readyIds(r.out);
-			if (JSON.stringify(before) !== JSON.stringify(["t#01"])) return fail("ready-nonexact", r, `ready=${JSON.stringify(before)}`);
+			if (JSON.stringify(before) !== JSON.stringify(["t#01"]))
+				return fail("ready-nonexact", r, `ready=${JSON.stringify(before)} expected=["t#01"]`);
 			r = sh(BI, ["bais", "move", "t#01", "Done"], hub, cap);
 			if (!r.ok) return fail("move-nonzero", r);
 			r = sh(BI, ["bais", "ready", "--json"], hub, cap);
 			if (!r.ok) return fail("exit-nonzero", r);
 			const after = readyIds(r.out);
-			if (JSON.stringify(after) !== JSON.stringify(["t#02"])) return fail("ready-nonempty", r, `ready=${JSON.stringify(after)}`);
+			if (JSON.stringify(after) !== JSON.stringify(["t#02"]))
+				return fail("ready-nonexact", r, `ready=${JSON.stringify(after)} expected=["t#02"]`);
 			return pass(`surfaced t#02 after close`);
 		},
 	},
@@ -337,6 +365,18 @@ function fail(reason, r, note = "") {
 }
 
 // Self-file a failed arm as a BAIS issue with the transcript attached.
+// Title and body mirror the BAML shape functions self_file_title() /
+// self_file_body() (baml_src/main.baml) byte-for-byte — BAML owns the
+// shape, main_test.baml pins the exact literal, so drifting either side
+// fails T0 (the pre-bits#02-fix drift: BAML said "BITS failure:" with no
+// provenance lines while the host wrote "BITS self-file:" + the Suite
+// block, and the typed shape was decorative).
+const selfFileTitle = (caseId, reason) => `BITS self-file: ${caseId} ${reason}`;
+const selfFileBody = (caseId, reason, transcript) =>
+	`BITS self-file: arm ${caseId} graded Fail (${reason}).\n\n` +
+	`Suite: drill(bits-t2). Filed by the suite, not by hand — the suite\n` +
+	`uses the tool to prove the tool.\n\n` +
+	`Transcript:\n${transcript}`;
 function selfFile(arm, graded) {
 	mkdirSync(SELF_FILE_DIR, { recursive: true });
 	const nums = readdirSync(SELF_FILE_DIR)
@@ -344,25 +384,16 @@ function selfFile(arm, graded) {
 		.map((m) => (m ? Number(m[1]) : 0));
 	const next = Math.max(1, ...nums) + 1;
 	const id = `bits#${String(next).padStart(2, "0")}`;
-	const body = [
-		`BITS self-file: arm ${arm.id} graded Fail (${graded.reason}).`,
-		``,
-		`Suite: drill(bits-t2). Filed by the suite, not by hand — the suite`,
-		`uses the tool to prove the tool.`,
-		``,
-		`Transcript:`,
-		graded.transcript || "(empty)",
-	].join("\n");
 	writeFileSync(
 		join(SELF_FILE_DIR, `${id}.toml`),
 		[
 			`id = "${id}"`,
-			`title = "BITS self-file: ${arm.id} ${graded.reason}"`,
+			`title = "${selfFileTitle(arm.id, graded.reason)}"`,
 			`status = "Open"`,
 			`kind = "Bug"`,
 			`area = "bits/t2"`,
 			`body = """`,
-			tomlSafe(body),
+			tomlSafe(selfFileBody(arm.id, graded.reason, graded.transcript || "(empty)")),
 			`"""`,
 			``,
 		].join("\n"),

@@ -27,7 +27,10 @@
 //     main_test.baml); `bits run --fast <arm-id>` runs one arm.
 //   self-filing: a graded Fail files itself as a BAIS issue with the
 //     transcript attached — the host side lives in scripts/bits-t2.mjs;
-//     self_file_body() builds the issue body so the shape is typed here.
+//     self_file_title()/self_file_body() are the typed source of the
+//     filed issue's shape, the host mirrors them byte-for-byte, and
+//     main_test.baml pins the exact literal (drift fails T0 — the
+//     bits#02-era drift had the BAML shape and the host shape disagree).
 
 enum Tier {
     T0,
@@ -156,11 +159,26 @@ function evidence_cite(drill_stem: string) -> string {
     "Evidence: drill(" + drill_stem + ")"
 }
 
-// Build the body of a self-filed failure issue: title line, arm, reason,
-// budgets, and the full transcript. The host writes it to
-// .bais/issues/<id>.toml unchanged.
+// Title of a self-filed failure issue: "<stem>: <arm> <reason>". The
+// host (scripts/bits-t2.mjs selfFile) mirrors this byte-for-byte.
+function self_file_title(case_id: string, reason: string) -> string {
+    "BITS self-file: " + case_id + " " + reason
+}
+
+// Build the body of a self-filed failure issue: arm, reason, the drill
+// provenance block, and the full transcript. The host writes it to
+// .bais/issues/<id>.toml unchanged (transcript pre-neutralized for
+// TOML """-safety host-side). A failure transcript must name BOTH sides
+// of the comparison that failed (bits#02: a ready-nonexact filing whose
+// transcript showed only the actual, correct-looking ready set could
+// not explain itself — the expectation lived only in runner source).
 function self_file_body(case_id: string, reason: string, transcript: string) -> string {
-    "BITS failure: arm " + case_id + " graded Fail (" + reason + ")\n\nTranscript:\n" + transcript
+    "BITS self-file: arm "
+        + case_id
+        + " graded Fail ("
+        + reason
+        + ").\n\nSuite: drill(bits-t2). Filed by the suite, not by hand — the suite\nuses the tool to prove the tool.\n\nTranscript:\n"
+        + transcript
 }
 
 // Goal-emitted case shapes (hub#199): the goal sketch's e2e half
