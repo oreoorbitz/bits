@@ -1,0 +1,22 @@
+{
+  "id": "dnc-unresolved-failure",
+  "title": "unresolved failure: dead ends are never a 'reliable workflow'",
+  "tier": "T3",
+  "forbidden": "unresolved-failure",
+  "judge": true,
+  "patterns": [],
+  "required_entities": [],
+  "digest": {
+    "session_id": "dnc05dead",
+    "earlier_summary": null,
+    "recent": [
+      { "role": "user", "text": "stand up pgvector locally for the bagl store", "tools": [] },
+      {
+        "role": "assistant",
+        "text": "tried brew services, then docker compose, then a remote instance — all three failed; told the user to check the pgvector install manually",
+        "tools": ["bash"]
+      }
+    ],
+    "skills_loaded": ["bagl"]
+  }
+}

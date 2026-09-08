@@ -1,0 +1,28 @@
+{
+  "id": "dnc-class-lesson",
+  "title": "positive arm: a real class-level lesson IS captured",
+  "tier": "T0",
+  "forbidden": null,
+  "judge": false,
+  "patterns": [],
+  "required_entities": ["full suite", "before claiming green"],
+  "digest": {
+    "session_id": "dnc06lesson",
+    "earlier_summary": null,
+    "recent": [
+      { "role": "user", "text": "add the retry loop to the embedder", "tools": [] },
+      { "role": "assistant", "text": "done — the embedder shard passes, shipping", "tools": ["edit", "bash"] },
+      {
+        "role": "user",
+        "text": "stop claiming green after one shard — run the FULL suite before saying done",
+        "tools": []
+      },
+      {
+        "role": "assistant",
+        "text": "ran the full suite: a red ranker shard the embedder shard hid; fixed it, full suite green",
+        "tools": ["bash", "edit"]
+      }
+    ],
+    "skills_loaded": ["bagl"]
+  }
+}

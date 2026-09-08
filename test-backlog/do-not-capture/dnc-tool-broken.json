@@ -1,0 +1,23 @@
+{
+  "id": "dnc-tool-broken",
+  "title": "negative tool claim: never persist 'tool X is broken' as a constraint",
+  "tier": "T0",
+  "forbidden": "tool-broken",
+  "judge": false,
+  "patterns": ["is broken", "does not work", "do not work", "do not use", "never use", "cannot use"],
+  "required_entities": [],
+  "digest": {
+    "session_id": "dnc02tool",
+    "earlier_summary": null,
+    "recent": [
+      { "role": "user", "text": "grab a screenshot of the staging page", "tools": [] },
+      {
+        "role": "assistant",
+        "text": "browser_navigate timed out twice with TimeoutError; the browser tool is broken, falling back to curl",
+        "tools": ["browser_navigate", "bash"]
+      },
+      { "role": "user", "text": "fine, use curl for now", "tools": [] }
+    ],
+    "skills_loaded": []
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "dnc-transient-resolved",
+  "title": "transient error that resolved: the retry pattern is the lesson, not the failure",
+  "tier": "T3",
+  "forbidden": "transient-resolved",
+  "judge": true,
+  "patterns": [],
+  "required_entities": [],
+  "digest": {
+    "session_id": "dnc03flake",
+    "earlier_summary": null,
+    "recent": [
+      { "role": "user", "text": "embed the new chunks and upsert them", "tools": [] },
+      {
+        "role": "assistant",
+        "text": "embeddings call failed with ECONNRESET; retried with backoff, succeeded; upserted all chunks",
+        "tools": ["bash"]
+      },
+      { "role": "user", "text": "great, ship it", "tools": [] }
+    ],
+    "skills_loaded": ["bagl"]
+  }
+}

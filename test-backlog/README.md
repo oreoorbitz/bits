@@ -25,6 +25,7 @@ fixtures the T2 arm of the same name materializes into a tmp hub:
 | `leases/` (t#40) | `lease-fencing` | claim fences from ready; `reap --now` past expiry re-parks to Open |
 | `cost/budgets.toml` | `budgets-asserted` | every arm wall_ms within its cap; suite total within suite_cap_ms (self-metered; stub tokens 0) |
 | `retrieval/scores.json` (hub#173) | `cross-embedder-agreement` | rank-1 agreement across vendors per query (flip fails naming the query); per-vendor spreads recorded, never asserted |
+| `do-not-capture/*.json` (hub#204) | `dnc-env-failure` / `dnc-tool-broken` / `dnc-transient-resolved` / `dnc-one-off-narrative` / `dnc-unresolved-failure` / `dnc-class-lesson` | ReviewTurn never emits hermes' forbidden artifact classes (deterministic arms T0 offline, fuzzy classes T3 judge); positive arm asserts a real class-level lesson IS captured |
 
 Recipe note (divergence from "every fixture is a BAIS issue"): `cost/`
 holds no issues — budgets.toml is the runner's budget table, and the T0
@@ -35,4 +36,10 @@ policy; the runner is the enforcement. Same divergence for
 vendors score chunks, BAIS tracks work), and the T0 literals in
 baml_src/retrieval_test.baml mirror its query 1 + 2 (change both
 together). The BAML policy twin is check_agreement/calibration_spread
-in baml_src/retrieval.baml.
+in baml_src/retrieval.baml. Same divergence for `do-not-capture/`:
+the JSON files hold literal TranscriptDigests (not issues — the
+fixtures are conversation digests, BAIS tracks work), and the BAML
+registry in baml_src/do_not_capture.baml mirrors them field-for-field
+(change both together; see do-not-capture/README.md). The BAML policy
+twin is ForbiddenPatternGrader/grader_stack_for in
+baml_src/do_not_capture.baml.

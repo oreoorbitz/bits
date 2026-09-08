@@ -1,0 +1,20 @@
+{
+  "id": "dnc-one-off-narrative",
+  "title": "one-off task narrative: a dated, session-bound request is not a skill",
+  "tier": "T0",
+  "forbidden": "one-off-narrative",
+  "judge": false,
+  "patterns": ["today's market", "#4731", "this session", "2026-09-08"],
+  "required_entities": [],
+  "digest": {
+    "session_id": "dnc04oneoff",
+    "earlier_summary": null,
+    "recent": [
+      { "role": "user", "text": "summarize today's market moves", "tools": [] },
+      { "role": "assistant", "text": "summarized the session's market moves", "tools": ["web_search"] },
+      { "role": "user", "text": "now analyze PR #4731", "tools": [] },
+      { "role": "assistant", "text": "analyzed PR #4731 and posted the review", "tools": ["bash"] }
+    ],
+    "skills_loaded": []
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "id": "dnc-env-failure",
+  "title": "env-dependent failure: capture the FIX, never the env state as a rule",
+  "tier": "T0",
+  "forbidden": "env-failure",
+  "judge": false,
+  "patterns": [
+    "is not installed",
+    "command not found",
+    "not available on this machine",
+    "missing binary",
+    "unconfigured credentials"
+  ],
+  "required_entities": [],
+  "digest": {
+    "session_id": "dnc01env",
+    "earlier_summary": null,
+    "recent": [
+      { "role": "user", "text": "list the ready BAIS issues", "tools": [] },
+      {
+        "role": "assistant",
+        "text": "ran `rg 'status = .Open.' .bais/issues` — failed: command not found: rg",
+        "tools": ["bash"]
+      },
+      {
+        "role": "assistant",
+        "text": "installed ripgrep with `brew install ripgrep`, retried, listed the ready issues",
+        "tools": ["bash"]
+      }
+    ],
+    "skills_loaded": ["bais"]
+  }
+}
