@@ -2,6 +2,10 @@
 
 > Read `../AGENTS.md` first. BITS is Basically a made-up Integrated Test Suite: agent-driven acceptance for BI, BAIS, and the ecosystem.
 
+## Required BAIS tooling
+
+Follow the root [required BAIS workflow](../AGENTS.md#required-bais-workflow). Use standalone `bais` commands for supported reads, issue creation, edits, status changes, and claims. Do not replace these operations with ad hoc scripts or direct TOML/SQLite edits. The shipped JSON helper is allowed for reads. Use `--hub /absolute/path/to/workspace/bits` for this project’s local backlog and the workspace root for shared integration issues. Use the root workflow's narrow exceptions for unsupported operations, malformed-file repair, and fixture/internal development; record the reason and validate the result.
+
 ## Ownership and entry points
 
 * `baml_src/main.baml` owns Case/Verdict, grading and budgets. Policy modules include grader, retrieval, Pareto, flip gate, scorecard and do-not-capture, with literal-data test twins.
