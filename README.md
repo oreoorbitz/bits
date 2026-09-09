@@ -19,11 +19,13 @@ Sibling to `bi`, `bais`, `bagl` under `orion-learn-baml/` — agent-driven accep
 | T2 | BITS fast path — stub model, machine speed | seconds | default suite |
 | T3 | BITS live path — real model, seeded sample | minutes + tokens | nightly, on-demand |
 
-**Status:** first real work landed (hub#153, bits#03 Done). T0: `Case`/`Verdict` + grading in `baml_src/main.baml`, `baml test` 13/13. T2: `scripts/bits-t2.mjs` 6/6 green via `bits run --fast`; failures self-file as bits issues (bits#02 kept as proof); `Evidence: drill(bits-t2)` resolves hub-wide. bits#01 stays Open pending the T3 sampled live run (needs a model key).
+**Status:** typed grading and policy modules plus the T2 fast runner are implemented. `bits arms` lists stable cases; `bits run --fast --arm <id>` runs one without self-filing. Full-suite failures can self-file BAIS issues with transcripts; `Evidence: drill(bits-t2)` resolves hub-wide. T3 `run --live` explicitly refuses as unwired (`bits#01`); supplying a model key alone does not enable it. See [AGENTS.md](AGENTS.md) for gates and [DOGFOOD.md](DOGFOOD.md) for historical findings.
 
 ```bash
 cd bits
-baml check && baml test   # T0 (once baml_src grows past the skeleton)
+export BAML_PROFILE=0
+baml check && baml test && baml generate   # T0 + SDK
 npm run build             # tsc -> dist/
 node dist/src/cli.js tiers
+node dist/src/cli.js arms
 ```
