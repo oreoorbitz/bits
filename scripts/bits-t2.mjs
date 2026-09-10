@@ -132,6 +132,9 @@ const trunc = (s) => (s.length > TRUNC ? s.slice(0, TRUNC) + "\n…[truncated]" 
 // TOML """-safe: transcripts ride in body """, so neutralize triple quotes.
 const tomlSafe = (s) => s.replaceAll('"""', "'''");
 
+// hub#231: the bits#02 both-sides convention is suite-wide — every
+// exact-comparison fail() note names ready= AND expected= so a
+// self-filed issue explains itself without reading runner source.
 const ARMS = [
 	{
 		id: "chain-blocks",
@@ -168,7 +171,7 @@ const ARMS = [
 		run(hub, cap) {
 			let r = sh(BI, ["bais", "ready", "--json"], hub, cap);
 			if (!r.ok) return fail("exit-nonzero", r);
-			if (readyIds(r.out).length !== 0) return fail("ready-nonempty", r, `ready=${JSON.stringify(readyIds(r.out))}`);
+			if (readyIds(r.out).length !== 0) return fail("ready-nonempty", r, `ready=${JSON.stringify(readyIds(r.out))} expected=[]`);
 			// NOTE: check is a gate — reported cycles exit nonzero WITH the
 			// JSON still on stdout. Parse regardless; unparseable is the failure.
 			r = sh(BI, ["bais", "check", "--json"], hub, cap);
@@ -189,7 +192,7 @@ const ARMS = [
 		run(hub, cap) {
 			let r = sh(BI, ["bais", "ready", "--json"], hub, cap);
 			if (!r.ok) return fail("exit-nonzero", r);
-			if (readyIds(r.out).length !== 0) return fail("ready-nonempty", r, `ready=${JSON.stringify(readyIds(r.out))}`);
+			if (readyIds(r.out).length !== 0) return fail("ready-nonempty", r, `ready=${JSON.stringify(readyIds(r.out))} expected=[]`);
 			r = sh(BI, ["bais", "check", "--json"], hub, cap);
 			if (!r.ok) return fail("exit-nonzero", r);
 			const dangling = (J(r.out).dangling ?? []).map((d) => d.id);
@@ -206,8 +209,8 @@ const ARMS = [
 			if (!r.ok) return fail("exit-nonzero", r);
 			const ids = readyIds(r.out);
 			const set = [...ids].sort();
-			if (JSON.stringify(set) !== JSON.stringify(["t#20", "t#24"])) return fail("ready-nonexact", r, `ready=${JSON.stringify(ids)}`);
-			if (ids[0] !== "t#20") return fail("hub-not-first", r, `ready=${JSON.stringify(ids)}`);
+			if (JSON.stringify(set) !== JSON.stringify(["t#20", "t#24"])) return fail("ready-nonexact", r, `ready=${JSON.stringify(ids)} expected=["t#20","t#24"]`);
+			if (ids[0] !== "t#20") return fail("hub-not-first", r, `ready=${JSON.stringify(ids)} expected=["t#20",...]`);
 			return pass("hub first, severity untouched");
 		},
 	},
@@ -218,7 +221,7 @@ const ARMS = [
 		run(hub, cap) {
 			let r = sh(BI, ["bais", "ready", "--json"], hub, cap);
 			if (!r.ok) return fail("exit-nonzero", r);
-			if (JSON.stringify(readyIds(r.out)) !== JSON.stringify(["t#40"])) return fail("ready-nonexact", r);
+			if (JSON.stringify(readyIds(r.out)) !== JSON.stringify(["t#40"])) return fail("ready-nonexact", r, `ready=${JSON.stringify(readyIds(r.out))} expected=["t#40"]`);
 			r = sh(BI, ["bais", "move", "t#40", "Doing", "--as", "bits-t2", "--for", "1h"], hub, cap);
 			if (!r.ok) return fail("claim-nonzero", r);
 			const claimed = readFileSync(join(hub, ".bais", "issues", "t#40.toml"), "utf8");
@@ -227,14 +230,14 @@ const ARMS = [
 			}
 			r = sh(BI, ["bais", "ready", "--json"], hub, cap);
 			if (!r.ok) return fail("exit-nonzero", r);
-			if (readyIds(r.out).length !== 0) return fail("claimed-still-ready", r);
+			if (readyIds(r.out).length !== 0) return fail("claimed-still-ready", r, `ready=${JSON.stringify(readyIds(r.out))} expected=[]`);
 			const future = new Date(Date.now() + 2 * 3600 * 1000).toISOString();
 			r = sh(BI, ["bais", "reap", "--now", future, "--json"], hub, cap);
 			if (!r.ok) return fail("reap-nonzero", r);
 			r = sh(BI, ["bais", "ready", "--json"], hub, cap);
 			if (!r.ok) return fail("exit-nonzero", r);
 			if (JSON.stringify(readyIds(r.out)) !== JSON.stringify(["t#40"])) {
-				return fail("reap-unparked", r, `ready=${JSON.stringify(readyIds(r.out))}`);
+				return fail("reap-unparked", r, `ready=${JSON.stringify(readyIds(r.out))} expected=["t#40"]`);
 			}
 			return pass("fenced while live, reaped after expiry");
 		},
